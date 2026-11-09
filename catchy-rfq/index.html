@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catchy Design | Request for Quotation</title>
+<meta name="description" content="Project enquiry and quotation request template for Catchy Design, Riyadh.">
+<style>
+:root{--ink:#34302c;--muted:#777067;--gold:#ae9873;--paper:#f7f4ef;--line:#d8d1c7}*{box-sizing:border-box}body{margin:0;background:#ebe7df;color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}.sheet{max-width:940px;margin:24px auto;background:var(--paper);box-shadow:0 16px 50px #433b3230;padding:44px 56px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:18px}.brand{font-family:Georgia,serif;font-size:27px;font-style:italic;letter-spacing:.02em}.brand small{display:block;font:9px/1.5 sans-serif;letter-spacing:.48em;padding-left:21px}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.19em;color:var(--muted)}h1{font:normal 48px/1.07 Georgia,serif;letter-spacing:-.03em;margin:26px 0 14px}.intro{max-width:650px;color:#625c54;margin-bottom:30px}h2{font:700 12px/1.5 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin:32px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}.n{color:var(--gold);margin-right:12px;font:normal 20px Georgia,serif}.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px 22px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label,.lab{font-size:11px;font-weight:700;letter-spacing:.055em;text-transform:uppercase}input,select,textarea{width:100%;border:1px solid #c9c1b6;background:white;padding:12px 13px;border-radius:2px;color:var(--ink);font:inherit;min-height:46px}textarea{min-height:125px;resize:vertical}input:focus,select:focus,textarea:focus{outline:2px solid #b2a083;outline-offset:1px}fieldset{border:0;padding:0;margin:0}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:9px 18px}.check{font-weight:400;font-size:13px;letter-spacing:0;text-transform:none;display:flex;align-items:flex-start;gap:8px}.check input{width:17px;min-height:17px;height:17px;margin:2px 0 0;accent-color:#876f4d}.note{color:var(--muted);font-size:12px;margin-top:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.primary,.secondary{padding:15px 21px;border-radius:2px;cursor:pointer;font:700 12px system-ui;letter-spacing:.12em;text-transform:uppercase}.primary{background:#332e28;color:#fff;border:1px solid #332e28}.secondary{background:transparent;color:var(--ink);border:1px solid #b6ac9e}.primary:hover{background:#56493c}.status{margin-top:10px;font-size:13px}.footer{margin-top:34px;border-top:1px solid var(--line);padding-top:17px;display:flex;justify-content:space-between;gap:12px;color:#746b60;font-size:11px}a{color:inherit}@media(max-width:680px){.sheet{padding:26px 20px;margin:0}.top{align-items:flex-start}h1{font-size:38px}.grid{grid-template-columns:1fr}.choices{grid-template-columns:1fr 1fr}.footer{flex-direction:column}.eyebrow{font-size:9px}}@media print{body{background:#fff}.sheet{box-shadow:none;margin:0;padding:14px}button{display:none}}
+</style>
+</head>
+<body><main class="sheet">
+<header class="top"><div class="brand">Catchy <small>DESIGN</small></div><div class="eyebrow">Company Profile / Project Enquiry</div></header>
+<div class="eyebrow" style="margin-top:28px;color:#9e855e">WORK WITH CATCHY</div>
+<h1>Request for Quotation</h1>
+<p class="intro">Tell us about your project. Complete this brief to prepare an enquiry for the Catchy Design team. Fields marked * are required.</p>
+<form id="rfq">
+<h2><span class="n">01</span> Project information</h2>
+<div class="grid">
+<div class="field"><label for="project">Project name *</label><input id="project" name="Project name" required></div>
+<div class="field"><label for="client">Client / organization *</label><input id="client" name="Client / organization" required></div>
+<div class="field"><label for="location">Location / city *</label><input id="location" name="Location / city" required></div>
+<div class="field"><label for="area">Approx. floor area (m²)</label><input id="area" name="Floor area" type="number" min="0" step="any"></div>
+<div class="field full"><label for="type">Project type *</label><select id="type" name="Project type" required><option value="">Select a project type</option><option>Residential</option><option>Workplace / office</option><option>Hospitality</option><option>Retail / commercial</option><option>Other</option></select></div>
+</div>
+<h2><span class="n">02</span> Services requested</h2>
+<fieldset><legend class="lab" style="margin-bottom:10px">Select all that apply</legend><div class="choices">
+<label class="check"><input type="checkbox" name="service" value="Concept design">Concept design</label>
+<label class="check"><input type="checkbox" name="service" value="Space planning">Space planning</label>
+<label class="check"><input type="checkbox" name="service" value="3D visualization">3D visualization</label>
+<label class="check"><input type="checkbox" name="service" value="Detailed design">Detailed design</label>
+<label class="check"><input type="checkbox" name="service" value="FF&E / materials">FF&E / materials</label>
+<label class="check"><input type="checkbox" name="service" value="Lighting & styling">Lighting & styling</label>
+<label class="check"><input type="checkbox" name="service" value="Technical coordination">Technical coordination</label>
+<label class="check"><input type="checkbox" name="service" value="Execution support">Execution support</label>
+<label class="check"><input type="checkbox" name="service" value="Other">Other</label></div></fieldset>
+<h2><span class="n">03</span> Schedule & budget</h2>
+<div class="grid">
+<div class="field"><label for="start">Target start date</label><input type="date" id="start" name="Target start date"></div>
+<div class="field"><label for="finish">Target completion date</label><input type="date" id="finish" name="Target completion date"></div>
+<div class="field"><label for="deadline">Proposal deadline</label><input type="date" id="deadline" name="Proposal deadline"></div>
+<div class="field"><label for="budget">Indicative budget (optional)</label><input id="budget" name="Indicative budget" placeholder="Amount and currency"></div>
+</div>
+<h2><span class="n">04</span> Contact & documents</h2>
+<div class="grid">
+<div class="field"><label for="person">Contact person *</label><input id="person" name="Contact person" required></div>
+<div class="field"><label for="phone">Telephone *</label><input id="phone" name="Telephone" type="tel" required></div>
+<div class="field full"><label for="email">Email address *</label><input id="email" name="Email" type="email" required></div>
+<div class="field full"><label for="notes">Project brief / drawings / additional notes</label><textarea id="notes" name="Project brief and notes" placeholder="Describe your project, expected deliverables and any drawings you will attach to your email."></textarea></div>
+</div>
+<p class="note">Drawings, specifications and reference images can be attached in your email application after choosing “Prepare email”. This form does not automatically upload files or send information to a server.</p>
+<label class="check" style="margin-top:16px"><input type="checkbox" id="consent" required>I agree to share my provided project and contact details with Catchy Design for the purpose of this quotation request. *</label>
+<div class="actions"><button class="primary" type="submit">Prepare enquiry email</button><button type="button" class="secondary" id="copy">Copy completed brief</button><button type="button" class="secondary" onclick="window.print()">Print / Save PDF</button></div>
+<p id="status" class="status" aria-live="polite"></p>
+</form>
+<footer class="footer"><span>Catchy Design · Riyadh, Saudi Arabia</span><span>Project enquiries: <a href="mailto:jurgen@int-senbar.com">jurgen@int-senbar.com</a></span></footer>
+</main><script>
+const form=document.getElementById('rfq'),state=document.getElementById('status');
+function brief(){const d=new FormData(form), arr=['CATCHY DESIGN — REQUEST FOR QUOTATION',''];for(const [label,id] of [['Project name','project'],['Client / organization','client'],['Location / city','location'],['Approx. floor area (m²)','area'],['Project type','type']])arr.push(label+': '+document.getElementById(id).value);arr.push('Services requested: '+(d.getAll('service').join(', ')||'Not specified'));for(const [label,id] of [['Target start date','start'],['Target completion date','finish'],['Proposal deadline','deadline'],['Indicative budget','budget'],['Contact person','person'],['Telephone','phone'],['Email address','email'],['Project brief / notes','notes']])arr.push(label+': '+document.getElementById(id).value);arr.push('','Drawings / reference files: Please see attached files, if any.');return arr.join('\n')}
+form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const subject='Catchy Design RFQ - '+document.getElementById('project').value;location.href='mailto:jurgen@int-senbar.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(brief());state.textContent='Your email application should open with the project brief. Attach drawings if required, then review and send the email. No email has been sent automatically.'});
+document.getElementById('copy').addEventListener('click',async()=>{if(!form.reportValidity())return;try{await navigator.clipboard.writeText(brief());state.textContent='The completed quotation brief was copied. Paste it into your email and attach relevant drawings.'}catch(e){state.textContent='Clipboard access is unavailable. Use Prepare enquiry email or Print / Save PDF.'}});
+</script></body></html>
