@@ -14,7 +14,7 @@
 <div class="eyebrow" style="margin-top:28px;color:#9e855e">WORK WITH CATCHY</div>
 <h1>Request for Quotation</h1>
 <p class="intro">Tell us about your project. Complete this brief to request a quotation. Fields marked * are required.</p>
-<form id="rfq" action="https://senbar.sa/contact.php" method="post">
+<form id="rfq" action="https://senbar.sa/catchy-enquiry.php" method="post" enctype="multipart/form-data">
 <h2><span class="n">01</span> Project information</h2>
 <div class="grid">
 <div class="field"><label for="project">Project name *</label><input id="project" maxlength="160" name="Project name" required></div>
@@ -50,6 +50,12 @@
 </div>
 
 <label class="check" style="margin-top:16px"><input type="checkbox" id="consent" required>I agree to share my provided project and contact details with Catchy Design for the purpose of this quotation request. *</label>
+<div class="field" style="margin-top:22px">
+<label for="attachments">Attach files (optional)</label>
+<input type="file" id="attachments" name="attachments[]" accept=".pdf,.jpg,.jpeg,.png,.dwg,.dxf,.zip" multiple aria-describedby="upload-help upload-status">
+<p class="note" id="upload-help" style="margin:0">PDF, JPG, PNG, DWG, DXF or ZIP · Up to 5 files · 5 MB per file · 10 MB total.</p>
+<p class="note" id="upload-status" role="status" aria-live="polite" style="margin:0"></p>
+</div>
 <div class="actions"><button class="primary" type="submit" id="send">Send</button></div>
 </form>
 <p id="status" class="status" role="status" aria-live="polite" tabindex="-1"></p>
@@ -59,23 +65,50 @@ const form=document.getElementById('rfq'),state=document.getElementById('status'
 function brief(){const d=new FormData(form), arr=['CATCHY DESIGN — REQUEST FOR QUOTATION',''];for(const [label,id] of [['Project name','project'],['Client / organization','client'],['Location / city','location'],['Approx. floor area (m²)','area'],['Project type','type']])arr.push(label+': '+document.getElementById(id).value);arr.push('Services requested: '+(d.getAll('service').join(', ')||'Not specified'));for(const [label,id] of [['Target start date','start'],['Target completion date','finish'],['Proposal deadline','deadline'],['Indicative budget','budget'],['Contact person','person'],['Telephone','phone'],['Email address','email'],['Project brief / notes','notes']])arr.push(label+': '+document.getElementById(id).value);return arr.join('\n')}
 const send=document.getElementById('send');
 let sending=false;
+const attachments=document.getElementById('attachments'),uploadStatus=document.getElementById('upload-status');
+let limits={max_files:5,max_file_bytes:5*1024*1024,max_total_bytes:10*1024*1024};
+const mb=bytes=>Number((bytes/1024/1024).toFixed(1));
+const limitsReady=fetch(form.action,{headers:{Accept:'application/json'}}).then(async response=>{
+ const data=await response.json();
+ if(!response.ok||!data.ok||!data.limits)throw new Error('limits');
+ limits=data.limits;
+ document.getElementById('upload-help').textContent=`PDF, JPG, PNG, DWG, DXF or ZIP · Up to ${limits.max_files} files · ${mb(limits.max_file_bytes)} MB per file · ${mb(limits.max_total_bytes)} MB total.`;
+ return true;
+}).catch(()=>false);
+function checkFiles(){
+ const files=Array.from(attachments.files),total=files.reduce((sum,file)=>sum+file.size,0);
+ let error='';
+ if(files.length>limits.max_files)error=`Choose up to ${limits.max_files} files.`;
+ else if(files.some(file=>!(/\.(pdf|jpe?g|png|dwg|dxf|zip)$/i).test(file.name)))error='Use PDF, JPG, PNG, DWG, DXF or ZIP files.';
+ else if(files.some(file=>file.size===0))error='Empty files cannot be attached.';
+ else if(files.some(file=>file.size>limits.max_file_bytes))error=`Maximum ${mb(limits.max_file_bytes)} MB per file.`;
+ else if(total>limits.max_total_bytes)error=`Maximum ${mb(limits.max_total_bytes)} MB total.`;
+ attachments.setCustomValidity(error);
+ uploadStatus.textContent=error||(files.length?files.map(file=>file.name).join(', ')+` (${mb(total)} MB total)`:'');
+ uploadStatus.style.color=error?'#9b3427':'';
+ return !error;
+}
+attachments.addEventListener('change',checkFiles);
 form.addEventListener('submit',async e=>{
  e.preventDefault();
- if(sending||!form.reportValidity())return;
+ if(sending)return;
+ if(!await limitsReady){state.className='status error';state.textContent='Sending is temporarily unavailable. Please refresh and try again.';return;}
+ if(!checkFiles()||!form.reportValidity()){attachments.reportValidity();return;}
  const message=brief();
  if(message.length>5000){state.textContent='Please shorten your project notes.';state.className='status error';return;}
  const payload=new FormData();
  for(const [key,id] of [['name','person'],['company','client'],['email','email'],['phone','phone']])payload.set(key,document.getElementById(id).value.trim());
- payload.set('subject','Project enquiry');payload.set('message',message);payload.set('website','');
+ payload.set('message',message);payload.set('website','');payload.set('consent','1');
+ for(const file of attachments.files)payload.append('attachments[]',file,file.name);
  sending=true;send.disabled=true;send.textContent='Sending…';state.textContent='';state.className='status';form.setAttribute('aria-busy','true');
  try{
-  const response=await fetch(form.action,{method:'POST',body:payload,headers:{Accept:'application/json'},signal:AbortSignal.timeout(30000)});
+  const response=await fetch(form.action,{method:'POST',body:payload,headers:{Accept:'application/json'},signal:AbortSignal.timeout(90000)});
   const result=await response.json();
-  if(!response.ok||result.ok!==true)throw new Error(response.status===429?'wait':'failed');
+  if(!response.ok||result.ok!==true)throw new Error(result.error||'Could not send your enquiry. Please try again shortly.');
   form.hidden=true;state.className='status success';state.textContent='Sent. Thank you.';state.focus();
  }catch(error){
   state.className='status error';
-  state.textContent=error.message==='wait'?'Please wait one minute, then send again.':'Could not confirm sending. Please try again shortly.';
+  state.textContent=error.name==='AbortError'||error.name==='TimeoutError'||error instanceof TypeError?'Could not confirm sending. Please try again shortly.':error.message;
   send.disabled=false;send.textContent='Send';
  }finally{sending=false;form.removeAttribute('aria-busy');}
 });
